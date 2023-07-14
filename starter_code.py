@@ -99,7 +99,7 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
         image_rng = galsim.UniformDeviate(seed1 + ifilter * nobj)
 
 
-        # First we get the amount of zodaical light for a position corresponding to the center of SCA
+        # Get the amount of zodaical light for a position corresponding to the center of SCA
         SCA_cent_pos = wcs.toWorld(sky_image.true_center)
         sky_level = roman.getSkyLevel(bandpass, world_pos=SCA_cent_pos)
         sky_level *= (1.0 + roman.stray_light_fraction)
