@@ -145,7 +145,7 @@ vega_500_idx = np.argmin(abs(vega_sed.wave_list - 500))
 
 
 
-def shearEst(num_gal = 1000, filter_name = 'H158', add_seed = 0, scale = roman.pixel_scale, SCA = 7, nwaves = 10, nx = 64, ny = 64, shear_value = 0.02,sigma_arcsec = 0.175, stellar_SEDs = None, indx_seed = 9999, mag_min=17 , mag_max =22, out_file = 'out' , start_idx = 0):
+def sims(num_gal = 1000, filter_name = 'H158', add_seed = 0, scale = roman.pixel_scale, SCA = 7, nwaves = 10, nx = 64, ny = 64, shear_value = 0.02,sigma_arcsec = 0.175, stellar_SEDs = None, indx_seed = 9999, mag_min=17 , mag_max =22, out_file = 'out' , start_idx = 0):
     shear_chrom_e1, shear_chrom_e2, shear_chrom_Resp_e1,shear_chrom_Resp_e2 , PSF_chrom_e1, PSF_chrom_e2, PSF_chrom_R = [], [], [], [], [], [], []
     #shear_achrom_e1, shear_achrom_e2, shear_achrom_Resp, PSF_achrom_e1, PSF_achrom_e2, PSF_achrom_R = [], [], [], [], [], [] 
     shear_star_e1, shear_star_e2, shear_star_Resp_e1,shear_star_Resp_e2,  PSF_star_e1, PSF_star_e2, PSF_star_R = [], [], [], [], [], [], []
@@ -448,7 +448,7 @@ print(filter_name)
 import time
 start_time = time.time()
 file_out = '10000Gal_NoNoise_' + filter_name + '_RealisticSEDs2_g10_g20.pickle'
-shearEst(num_gal = 10000, filter_name = filter_name, scale = roman.pixel_scale/4, 
+sims(num_gal = 10000, filter_name = filter_name, scale = roman.pixel_scale/4, 
                        nwaves = nwaves, nx = 64*2, ny = 64*2, shear_value = 0.00,
                        sigma_arcsec =sigma_arcsec, mag_min = mag_min, mag_max = mag_max, out_file = file_out, start_idx = 0 )
 end_time = time.time()
