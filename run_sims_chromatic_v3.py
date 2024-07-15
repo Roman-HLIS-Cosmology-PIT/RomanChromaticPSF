@@ -301,14 +301,7 @@ def shearEst(num_gal = 1000, filter_name = 'H158', add_seed = 0, scale = roman.p
         
         
         psfData = psfData.array#/np.sum(psfData.array)
-        #psfData_achrom = psfData_achrom.array
-        #psfData_star = psfData_star.array#/np.sum(psfData_star.array)
-        #psfData_scaled = psfData_scaled.array#/np.sum(psfData_scaled.array)
         
-        # Four Galaxies to cancel spin-2 and spin-4 ansiotropies
-        # spin-2 is shape noise in diagnonal elements of shear response matrix
-        # spin-4 is shape noise in diagnonal and of-diagnoal elements of shear response matrix, 
-        # but an order of magnitude smaller than spin-2
         psf_stamps.append(psfData)
         psf_star_stamps.extend(psfData_star)
         star_flux.extend(stars_flux)
@@ -332,62 +325,13 @@ def shearEst(num_gal = 1000, filter_name = 'H158', add_seed = 0, scale = roman.p
             flux.append(np.sum(gal_data_rot))
             stamps.append(galaxy_data)
             #psf_scaled_stamps.append(psfData_scaled)
-            
-            # Now we measure shear
-
-            # fake detection
-            #indX = np.arange(int(nx/2), nx*num_objects, nx)
-            #indY = np.arange(int(ny/2), ny, ny)
-            #inds = np.meshgrid(indY, indX, indexing="ij")
-            #coords = np.vstack(inds).T
-
-
-            #fpTask  =  fpfs.image.measure_source(psfData, pix_scale = scale, sigma_arcsec=sigma_arcsec)
-            #mms =  fpTask.measure(galaxy_data, coords)
-            #mms = fpTask.get_results(mms)
-            #ells=   fpfs.catalog.fpfs_m2e(mms,const=2000)
-            #resp_e1= ells['fpfs_R1E']
-            #resp_e2= ells['fpfs_R2E']
-            #shear_e1=ells['fpfs_e1']
-            #shear_e2=ells['fpfs_e2']
-            #shear_chrom_Resp_e1.extend(resp_e1)
-            #shear_chrom_Resp_e2.extend(resp_e2)
-            #shear_chrom_e1.extend(shear_e1)
-            #shear_chrom_e2.extend(shear_e2)
-            #print('Input shear is: %.6f' %shear_value)
-            #print('Estimated shear (chromatic PSF) is: %.6f' %shear_g1)
-
+        
 
             psf_star_avg = np.average(psfData_star, axis = 0)
             psf_star_avg_stamps.append(psf_star_avg)
             avg_star_flux.append(np.sum(psf_star_avg))
-            #fpTask  =  fpfs.image.measure_source(psf_star_avg, pix_scale = scale, sigma_arcsec=sigma_arcsec)
-            #mms =  fpTask.measure(galaxy_data, coords)
-            #mms = fpTask.get_results(mms)
-            #ells=   fpfs.catalog.fpfs_m2e(mms,const=2000)
-            #resp_e1= ells['fpfs_R1E']
-            #resp_e2= ells['fpfs_R2E']
-            #shear_e1=ells['fpfs_e1']
-            #shear_e2=ells['fpfs_e2']
-            #shear_star_Resp_e1.extend(resp_e1)
-            #shear_star_Resp_e2.extend(resp_e2)
-            #shear_star_e1.extend(shear_e1)
-            #shear_star_e2.extend(shear_e2)
             
-            #norm_psf = np.array(psfData_star)/(np.array(stars_flux)[:, np.newaxis][:, np.newaxis])
-            #psf_star_avg = np.average(norm_psf, axis = 0)
-            #fpTask  =  fpfs.image.measure_source(psf_star_avg, pix_scale = scale, sigma_arcsec=sigma_arcsec)
-            #mms =  fpTask.measure(galaxy_data, coords)
-            #mms = fpTask.get_results(mms)
-            #ells=   fpfs.catalog.fpfs_m2e(mms,const=2000)
-            #resp_e1= ells['fpfs_R1E']
-            #resp_e2= ells['fpfs_R2E']
-            #shear_e1=ells['fpfs_e1']
-            #shear_e2=ells['fpfs_e2']
-            #shear_star_norm_Resp_e1.extend(resp_e1)
-            #shear_star_norm_Resp_e2.extend(resp_e2)
-            #shear_star_norm_e1.extend(shear_e1)
-            #shear_star_norm_e2.extend(shear_e2)
+            
             bad_images.append(0)
         except:
             bad_images.append(-1)
@@ -414,26 +358,13 @@ def shearEst(num_gal = 1000, filter_name = 'H158', add_seed = 0, scale = roman.p
                 start_idx = 0
                 end_idx = l + 1
             
-            
-            #print(len(gal_ids), len(stamps), len(psf_stamps), len(bad_images))
-            #print(len(x_pos), len(random_indices[start_idx:end_idx], ))
-            #print(len(SCAs), len(x_pos), len(y_pos), len(flux))
-            #print(len(random_indices[start_idx:end_idx]), len(PSF_chrom_e1), len(PSF_chrom_e2), len(PSF_chrom_R))
-
-            #gal_dict = {'galaxy_id': gal_ids, 'stamps': stamps, 'psf_stamps': psf_stamps,'bad_images': bad_images, 'redshift': z,                 'x_pos': x_pos, 'y_pos': y_pos,'flux': flux, 'SCA': SCAs, 'indices': random_indices[start_idx:end_idx],                                            'eff_psf_e1': PSF_chrom_e1, 'eff_psf_e2': PSF_chrom_e2, 'eff_psf_R': PSF_chrom_R,
-                        #'psf_star_avg_stamps':psf_star_avg_stamps, 'avg_star_flux': avg_star_flux}
+        
                         
             gal_dict = {'galaxy_id': gal_ids, 'stamps': stamps, 'psf_stamps': psf_stamps,'bad_images': bad_images, 'redshift': z,                 'x_pos': x_pos, 'y_pos': y_pos,'flux': flux, 'SCA': SCAs, 'indices': random_indices[start_idx:end_idx],                                            'eff_psf_e1': PSF_chrom_e1, 'eff_psf_e2': PSF_chrom_e2, 'eff_psf_R': PSF_chrom_R,
                         'psf_star_avg_stamps':psf_star_avg_stamps, 'avg_star_flux': avg_star_flux}
 
-
-            #print(len(star_ids), len(psf_star_stamps), len(psf_star_avg_stamps), len(star_flux))
-            #print(len(avg_star_flux))
-            #print(len(SCAs), len(x_pos), len(y_pos), len(flux))
-            #print(len(random_indices[start_idx:end_idx]), len(PSF_chrom_e1), len(PSF_chrom_e2), len(PSF_chrom_R))
             
-            #star_dict = { 'star_id':star_ids, 'psf_star_stamps': psf_star_stamps,
-                         #'star_flux': star_flux ,'gal_host_id':  gal_star_ids}
+        
             star_dict = {} ## for second run
             shear_dict = {'gal': {'e1': shear_chrom_e1, 'e2': shear_chrom_e2, 'R_e1': shear_chrom_Resp_e1, 'R_e2': shear_chrom_Resp_e2 },
                          'star': {'e1': shear_star_e1, 'e2': shear_star_e2, 'R_e1': shear_star_Resp_e1, 'R_e2': shear_star_Resp_e2 }}
