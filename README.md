@@ -2,7 +2,7 @@
 
 ## Introduction
 
-The software and data used are based on the paper:
+The software and data were used for the research that is described in this paper:
  - Chromatic Effects on the PSF and Shear Measurement for the Roman Space Telescope High-Latitude Wide Area Survey; Berlfein et al. (2025), submitted - [ADS entry](https://ui.adsabs.harvard.edu/abs/2025arXiv250500093B/abstract)
 
 
@@ -10,23 +10,22 @@ This repository includes software to:
  - Generate Roman-like image simulations of the [OpenUniverse2024 catalog](https://irsa.ipac.caltech.edu/data/theory/openuniverse2024/overview.html) or the [cosmoDC2 catalog](https://portal.nersc.gov/project/lsst/cosmoDC2/_README.html) using [GalSim](https://github.com/GalSim-developers/GalSim).
  - Generate catalog-level magnitude noise using [PhotErr](https://github.com/jfcrenshaw/photerr).
  - Perform shear measurement on galaxy images using [AnaCal](https://github.com/mr-superonion/AnaCal).
- - Correct for SED-dependant chromatic effects on the PSF.
+ - Correct for SED-dependent chromatic effects on the PSF.
 
-Note that in order to generate the actual image simulations, the relevant extragalactic and stellar catalogs are not provided here and must be downloaded. We provide catalog-level magnitudes (both true and observed), along with their errors, for the Roman (YJHFW) and LSST (ugrizy) bands. All entries contain object IDs in case you wish to cross-match with the full simulated catalogs. 
+Note that in order to generate the actual image simulations, the relevant full extragalactic and stellar catalogs are not provided here and must be downloaded. We provide a subset of the catalog, with the relevant object IDs, true and noisy magnitudes, along with their errors, for the Roman (YJHFW) and LSST (ugrizy) bands. 
 
 
-## Installation
+## Using this software
 
-You can clone the repository using:
+The set of notebooks and scripts can be run after cloning the repo:
 ```
 git clone https://github.com/FedericoBerlfein/RomanChromaticPSF.git
 ```
 
-
 ## Guide to repository contents
-Below is an overview on the contents of this repository. More details on each folder can be found in each folders respective README. 
+Below is an overview of the contents of this repository. More details on each folder can be found in each folder's respective README. 
 
-- ``Gal_props_catnoise``: This folder contains the catalog-level noisy and true magnitudes, magnitude errors, object IDs, and redshift, for every object used in the paper. More details on the contents of this folder can be found in it's respective README.
+- ``Gal_props_catnoise``: This folder contains the catalog-level noisy and true magnitudes, magnitude errors, object IDs, and redshift, for every object used in the paper. 
 - ``PaperFigures``: All the figures used in the paper.
 - ``SED_fit_coeff``: The scripts used to fit the SEDs, as well as the results of the fits.
 - ``gen_sims``: The scripts used to generate the image simulations and do the shape measurement.
@@ -45,4 +44,4 @@ In case you need help or have questions about the code, feel free to contact Fed
 
 The code has been publicly released; it is available under the terms of our [LICENSE](LICENSE).
 
-If you make use of the software, please cite paper listed at the top of this README, and provide a link to this code repository.
+If you make use of the software, please cite the paper listed at the top of this README, and provide a link to this code repository.
