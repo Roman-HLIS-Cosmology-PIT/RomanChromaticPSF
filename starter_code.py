@@ -32,16 +32,6 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
     ydim = ydim
 
 
-    # Use a logger to output some information about the run.
-    logging.basicConfig(format="%(message)s", stream=sys.stdout)
-    logger = logging.getLogger("demo13")
-    logging_levels = { 0: logging.CRITICAL,
-                       1: logging.WARNING,
-                       2: logging.INFO,
-                       3: logging.DEBUG }
-    level = logging_levels[args.verbosity]
-    logger.setLevel(level)
-
     # Read in the Roman filters, setting an AB zeropoint appropriate for Roman
     roman_filters = roman.getBandpasses(AB_zeropoint=True)
     logger.debug('Read in Roman imaging filters.')
