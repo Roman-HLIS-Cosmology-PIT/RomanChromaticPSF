@@ -158,7 +158,6 @@ def get_coeff(indices, filters):
             bp_0 = bandpass.effective_wavelength
             filtered_obj_wave = obj_wave[obj_mask] - bp_0
             filtered_obj_phot_sed = obj_phot_sed[obj_mask] / obj_flux
-            #filtered_obj_phot_sed = smooth_gaussian(filtered_obj_phot_sed, 1e4)
             filtered_native_wave = native_wave[native_mask] - bp_0
             filtered_star_avg_sed = star_avg_sed[native_mask] / star_avg_flux
 
