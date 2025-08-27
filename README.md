@@ -1,5 +1,5 @@
 # Chromatic Effects on PSF and Shear Measurement for Roman
-
+Documentation for this repo is in progress.
 ## Introduction
 
 The software and data were used for the research that is described in this paper:
