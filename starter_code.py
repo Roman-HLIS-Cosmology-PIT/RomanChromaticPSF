@@ -17,22 +17,20 @@ from astropy.table import Table
 
 
 def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pix, ydim = roman.n_pix):
+    
+    # list of outputs: individual images before convolving with PSF, index of object type and positions. List of images for different bands
     obj_list = []
     obj_types = []
     obj_pos = []
-    full_images = []
+    full_images = []  # List of images for different bands
     use_filters = filters
-    outpath = 'output'#args.outpath
-    nobj = nobj#args.nobj
-    seed = seed#args.seed
+    nobj = nobj
+    seed = seed
     seed1 = galsim.BaseDeviate(seed).raw()
-    use_SCA = SCA #args.sca
+    use_SCA = SCA
     xdim = xdim
     ydim = ydim
 
-    # Make output directory if not already present.
-    #if not os.path.isdir(outpath):
-    #    os.mkdir(outpath)
 
     # Use a logger to output some information about the run.
     logging.basicConfig(format="%(message)s", stream=sys.stdout)
@@ -48,15 +46,13 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
     roman_filters = roman.getBandpasses(AB_zeropoint=True)
     logger.debug('Read in Roman imaging filters.')
 
-    # Get the names of the ones we will use here.
+    # Get the names of the filters to use
     filters = [filter_name for filter_name in roman_filters if filter_name[0] in use_filters]
     logger.debug('Using filters: %s',filters)
 
-    # We'll use this one for our flux normalization of stars, so we'll need this regardless of
-    # which bandpass we are simulating.
+    # Bandpass for flux normalization of stars
     y_bandpass = roman_filters['Y106']
 
-    
     # read cosmos catalogs
 
     cat1 = galsim.COSMOSCatalog(sample='25.2', area=roman.collecting_area, exptime=roman.exptime)
@@ -243,20 +239,17 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
             #shear = galsim.hsm.EstimateShear(stamp, stamp_psf, shear_est = 'KSB', strict = False)
             #print(shear.corrected_g1, shear.corrected_g2, shear.corrected_e1, shear.corrected_e2)
           
-            # Find the overlapping bounds between the large image and the individual stamp.
+            # Find overlapping bounds between the large image and the individual stamp.
             bounds = stamp.bounds & full_image.bounds
 
-            # Add this to the corresponding location in the large image.
+            # Add stamp to full sky image
             full_image[bounds] += stamp[bounds]
 
         logger.info('All objects have been drawn for filter %s.',filter_name)
 
         logger.info('Adding the noise and detector non-idealities.')
 
-        # At this point in the image generation process, an integer number of photons gets
-        # detected.  Because of how GalSim's photon shooting works for InterpolatedImage
-        # (used implicitly in the PSF implementation), the image has non-integral values at this
-        # point.  Image has non-integral number of photos, so we need to quantize it to integer numbers.
+        # photon number may not be integer, so quantize to make fluxes integers
         full_image.quantize()
 
         # Add the sky image.  Galaxies already have Poisson noise due to photon, but the sky image doesn't.
@@ -288,7 +281,7 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
         roman.applyIPC(full_image)
         logger.debug('Applied interpixel capacitance to {0}-band image'.format(filter_name))
 
-        # 5) Adding read noise. For now no noise:
+        # 5) Adding noise. For now no noise, so commented out:
         #read_noise = galsim.GaussianNoise(image_rng, sigma=roman.read_noise)
         #full_image.addNoise(read_noise)
         #logger.debug('Added readnoise to {0}-band image'.format(filter_name))
@@ -297,7 +290,7 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
         full_image /= roman.gain
         sky_image /= roman.gain
 
-        # Finally, the analog-to-digital converter reads in an integer value.
+        # Once again quantize values to integers
         full_image.quantize()
         sky_image.quantize()
         
@@ -313,8 +306,8 @@ def runSim(filters, nobj, seed =12345, SCA = 7,  chrom = True, xdim = roman.n_pi
         return dict_sim
 
 #example run
-filters = 'Z' #args.filters
-nobj = 1000#args.nobj
+filters = 'Z' 
+nobj = 1000
 sim_dict = runSim(filters, nobj)
 
 #plot image
