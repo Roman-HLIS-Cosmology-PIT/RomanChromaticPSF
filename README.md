@@ -3,7 +3,7 @@ Documentation for this repo is in progress.
 ## Introduction
 
 The software and data were used for the research that is described in this paper:
- - Chromatic Effects on the PSF and Shear Measurement for the Roman Space Telescope High-Latitude Wide Area Survey; Berlfein et al. (2025), submitted - [ADS entry](https://ui.adsabs.harvard.edu/abs/2025arXiv250500093B/abstract)
+ - Chromatic Effects on the PSF and Shear Measurement for the Roman Space Telescope High-Latitude Wide Area Survey; Berlfein et al. (2025) - [MNRAS](https://academic.oup.com/mnras/article/542/2/608/8219153)
 
 
 This repository includes software to:
